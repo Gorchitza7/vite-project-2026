@@ -1,15 +1,7 @@
+import { request } from "./httpClient.js";
 import { API_BASE, API_KEY } from "../config.js";
 
-async function request(path) {
-  const response = await fetch(`${API_BASE}/${path}`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json", "x-api-key": API_KEY },
-  });
-  if (!response.ok) {
-    throw new Error(`Ошибка запроса ${path}: ${response.status}`);
-  }
-  return response.json();
-}
+const options = { headers: { "x-api-key": API_KEY } };
 
-export const fetchFinance1 = () => request("finance1");
-export const fetchFinance2 = () => request("finance2");
+export const fetchFinance1 = () => request(`${API_BASE}/finance1`, options);
+export const fetchFinance2 = () => request(`${API_BASE}/finance2`, options);
