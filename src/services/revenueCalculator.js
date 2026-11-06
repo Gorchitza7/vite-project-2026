@@ -1,10 +1,7 @@
-// Клиент: знает только про getTransactions() и курсы валют.
-// 1) суммируем отдельно по каждой валюте (валюты не смешиваются)
-// 2) переводим каждую сумму в целевую валюту и складываем
 export function calculateDailyRevenue(adapters, rates, target = "USD") {
   const all = adapters.flatMap((adapter) => adapter.getTransactions());
 
-  // Суммы по валютам — в центах, чтобы избежать ошибок float
+  // Суммы по валютам в центах (без ошибок float), валюты не смешиваются
   const centsByCurrency = {};
   for (const { amount, currency } of all) {
     centsByCurrency[currency] =
@@ -19,7 +16,7 @@ export function calculateDailyRevenue(adapters, rates, target = "USD") {
       throw new Error(`Нет курса для валюты: ${currency} или ${target}`);
     }
     totalsByCurrency[currency] = cents / 100;
-    // rates — единиц валюты за 1 USD: X -> USD -> target
+    // rates = единиц валюты за 1 USD: currency -> USD -> target
     totalCents += Math.round((cents / rates[currency]) * rates[target]);
   }
 

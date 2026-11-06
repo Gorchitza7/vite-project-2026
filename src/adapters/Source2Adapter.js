@@ -1,6 +1,5 @@
 import { normalizeCurrency } from "../utils/normalizeCurrency.js";
 
-// Источник №2: массив строк "300 USD"
 export class Source2Adapter {
   constructor(source) {
     this.source = source;
